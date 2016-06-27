@@ -24,7 +24,8 @@
                 <form class="form">
                     <div class="form-group">
                         <span>
-                            <textarea class="form-control" placeholder="Add a comment" data-bind="value: replyContent, valueUpdate: 'input', attr: {maxlength: $root.MAXLENGTH}"></textarea>
+                            <p id="messageCounter">300</p>
+                            <textarea id = "message" class="form-control" placeholder="Add a comment" data-bind="value: replyContent, valueUpdate: 'input', maxLength="1500"></textarea>
                         </span>
                     </div>
                     <div data-bind="if: replyNotEmpty" class="form-group">
@@ -59,3 +60,22 @@
 
 </div>
 <%include file="comment_template.mako" />
+
+<script type="text/javascript">
+    //Count characters in textarea
+    function characterCount(textarea, span, maxLength) {
+        if(maxLength == undefined) {
+            var maxLength = 1500;
+        }
+
+        var messageLength = textarea.value.length; //get length of content in the textarea
+        span.innerHTML = maxLength - messageLength;
+        return true;
+    }
+
+    window.onload = function() {
+        document.getElementById("message").onkeyup = function() {
+            characterCount(this, document.getElementById(this.id+'Counter'), 1500);
+        };
+    };
+</script>
