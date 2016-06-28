@@ -24,15 +24,15 @@
                 <form class="form">
                     <div class="form-group">
                         <span>
-                            <p id="messageCounter">300</p>
-                            <textarea id = "message" class="form-control" placeholder="Add a comment" data-bind="value: replyContent, valueUpdate: 'input', maxLength="1500"></textarea>
+                            <p id="messageCounter">1500</p>
+                            <textarea id = "message" name="message" class="form-control" placeholder="Add a comment" data-bind="value: replyContent", valueUpdate: 'input'></textarea>
                         </span>
                     </div>
                     <div data-bind="if: replyNotEmpty" class="form-group">
                         <div class="clearfix">
                             <div class="pull-right">
                                 <a class="btn btn-default btn-sm" data-bind="click: cancelReply, css: {disabled: submittingReply}">Cancel</a>
-                                <a class="btn btn-success btn-sm" data-bind="click: submitReply, css: {disabled: submittingReply}, text: commentButtonText"></a>
+                                <a class="btn btn-success btn-sm" data-bind="click: submitReply, css: {disabled: submittingReply}, text: commentButtonText" id="submit"></a>
                                 <span data-bind="text: replyErrorMessage" class="text-danger"></span>
                             </div>
                         </div>
@@ -77,5 +77,15 @@
         document.getElementById("message").onkeyup = function() {
             characterCount(this, document.getElementById(this.id+'Counter'), 1500);
         };
-    };
+
+    $('#message').keyup(function(){
+    var messageContent = $(this).val();
+        //Disable submit button if the max length is reached
+        if (messageContent.length > 1500) {
+            $('#submit').attr('disabled', 'disabled');
+        } else {
+            $('#submit').removeAttr('disabled');
+        }
+    })
+};
 </script>
