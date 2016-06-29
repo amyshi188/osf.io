@@ -24,7 +24,7 @@
                 <form class="form">
                     <div class="form-group">
                         <span>
-                            <p id="messageCounter">1500</p>
+                            <p id="messageCounter">500</p>
                             <textarea id = "message" name="message" class="form-control" placeholder="Add a comment" data-bind="value: replyContent", valueUpdate: 'input'></textarea>
                         </span>
                     </div>
@@ -61,11 +61,12 @@
 </div>
 <%include file="comment_template.mako" />
 
+<%doc>
 <script type="text/javascript">
     //Count characters in textarea
     function characterCount(textarea, span, maxLength) {
         if(maxLength == undefined) {
-            var maxLength = 1500;
+            var maxLength = 500;
         }
 
         var messageLength = textarea.value.length; //get length of content in the textarea
@@ -75,17 +76,20 @@
 
     window.onload = function() {
         document.getElementById("message").onkeyup = function() {
-            characterCount(this, document.getElementById(this.id+'Counter'), 1500);
+            characterCount(this, document.getElementById(this.id+'Counter'), 500);
         };
 
     $('#message').keyup(function(){
     var messageContent = $(this).val();
         //Disable submit button if the max length is reached
-        if (messageContent.length > 1500) {
+        if (messageContent.length > 500) {
             $('#submit').attr('disabled', 'disabled');
+            $('#submit').unbind("click");
         } else {
             $('#submit').removeAttr('disabled');
+            $('#submit').bind("click", submitReply);
         }
     })
 };
 </script>
+</%doc>
